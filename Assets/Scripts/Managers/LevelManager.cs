@@ -1,6 +1,8 @@
 using System;
+using Controllers;
 using Data.UnityObject;
 using Data.ValueObject;
+using Signals;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -19,6 +21,8 @@ namespace Managers
         #region Serialized Variables
 
         [Space] [SerializeField] private GameObject levelHolder;
+        [SerializeField] private LevelLoaderCommand levelLoader;
+        [SerializeField] private ClearActiveLevelCommand levelClearer;
 
         #endregion
 
@@ -43,5 +47,47 @@ namespace Managers
         }
 
         private LevelData GetLevelData() => Resources.Load<CD_Level>("Data/CD_Level").Levels[_levelID];
+
+
+        #region Event Subscription
+
+        private void OnEnable()
+        {
+            SubscribeEvents();
+        }
+
+        private void SubscribeEvents()
+        {
+            CoreGameSignals.Instance.onLevelInitialize += OnInitializeLevel;
+            CoreGameSignals.Instance.onClearActiveLevel += OnClearActiveLevel;
+        }
+
+        private void UnsubscribeEvents()
+        {
+            CoreGameSignals.Instance.onLevelInitialize -= OnInitializeLevel;
+            CoreGameSignals.Instance.onClearActiveLevel -= OnClearActiveLevel;
+        }
+
+        private void OnDisable()
+        {
+            UnsubscribeEvents();
+        }
+
+        #endregion
+
+        private void Start()
+        {
+            OnInitializeLevel();
+        }
+
+        private void OnInitializeLevel()
+        {
+            levelLoader.InitializeLevel(_levelID, levelHolder.transform);
+        }
+
+        private void OnClearActiveLevel()
+        {
+            levelClearer.ClearActiveLevel(levelHolder.transform);
+        }
     }
 }

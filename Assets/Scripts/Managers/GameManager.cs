@@ -2,6 +2,7 @@ using System;
 using Enums;
 using Extentions;
 using Keys;
+using Signals;
 
 public class GameManager : MonoSingleton<GameManager>
 {
@@ -24,10 +25,14 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void SubscribeEvents()
     {
+        CoreGameSignals.Instance.onChangeGameState += OnChangeGameState;
+        CoreGameSignals.Instance.onSaveGameData += OnSaveGame;
     }
 
     private void UnsubscribeEvents()
     {
+        CoreGameSignals.Instance.onChangeGameState -= OnChangeGameState;
+        CoreGameSignals.Instance.onSaveGameData -= OnSaveGame;
     }
 
     private void OnDisable()
