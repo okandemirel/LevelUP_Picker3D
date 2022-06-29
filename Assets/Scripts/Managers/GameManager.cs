@@ -3,6 +3,7 @@ using Enums;
 using Extentions;
 using Keys;
 using Signals;
+using UnityEngine;
 
 public class GameManager : MonoSingleton<GameManager>
 {
@@ -15,6 +16,12 @@ public class GameManager : MonoSingleton<GameManager>
     #endregion
 
     #endregion
+
+    protected override void Awake()
+    {
+        base.Awake();
+        Application.targetFrameRate = 60;
+    }
 
 
     private void OnEnable()
@@ -47,10 +54,10 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void OnSaveGame(SaveGameDataParams saveDataParams)
     {
-        ES3.Save("Level", saveDataParams.Level);
-        ES3.Save("Coin", saveDataParams.Coin);
-        ES3.Save("SFX", saveDataParams.SFX);
-        ES3.Save("VFX", saveDataParams.VFX);
-        ES3.Save("Haptic", saveDataParams.Haptic);
+        if (saveDataParams.Level != null) ES3.Save("Level", saveDataParams.Level);
+        if (saveDataParams.Coin != null) ES3.Save("Coin", saveDataParams.Coin);
+        if (saveDataParams.SFX != null) ES3.Save("SFX", saveDataParams.SFX);
+        if (saveDataParams.VFX != null) ES3.Save("VFX", saveDataParams.VFX);
+        if (saveDataParams.Haptic != null) ES3.Save("Haptic", saveDataParams.Haptic);
     }
 }

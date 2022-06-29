@@ -1,5 +1,7 @@
-using System;
+using DG.Tweening;
+using Enums;
 using Managers;
+using Signals;
 using UnityEngine;
 
 namespace Controllers
@@ -22,12 +24,14 @@ namespace Controllers
         {
             if (other.CompareTag("StageArea"))
             {
-                //Playerı durdur, toplara kuvvet uygula
+                CoreGameSignals.Instance.onStageAreaReached?.Invoke();
+                InputSignals.Instance.onDisableInput?.Invoke();
+                DOVirtual.DelayedCall(5, other.transform.parent.GetComponent<PoolController>().ControlSuccessCondition);
             }
 
             if (other.CompareTag("MiniGameArea"))
             {
-                //MiniGame'i başlat
+                UISignals.Instance.onOpenPanel?.Invoke(UIPanels.MiniGamePanel);
             }
         }
 

@@ -11,6 +11,10 @@ namespace Controllers
     {
         #region Self Variables
 
+        #region Public Variables
+
+        #endregion
+
         #region Serialized Variables
 
         [SerializeField] private PlayerManager manager;
@@ -19,7 +23,7 @@ namespace Controllers
         #endregion
 
         [Header("Data")] [ShowInInspector] private PlayerMovementData _movementData;
-        [ShowInInspector] private bool _isReadyToMove;
+        [ShowInInspector] private bool _isReadyToMove, _isReadyToPlay;
         [ShowInInspector] private float _inputValue;
         [ShowInInspector] private Vector2 _clampValues;
 
@@ -46,16 +50,26 @@ namespace Controllers
             _clampValues = inputParam.ClampValues;
         }
 
+        public void IsReadyToPlay(bool state)
+        {
+            _isReadyToPlay = state;
+        }
+
         private void FixedUpdate()
         {
-            if (_isReadyToMove)
+            if (_isReadyToPlay)
             {
-                Move();
+                if (_isReadyToMove)
+                {
+                    Move();
+                }
+                else
+                {
+                    StopSideways();
+                }
             }
             else
-            {
                 Stop();
-            }
         }
 
         private void Move()
@@ -74,10 +88,23 @@ namespace Controllers
             rigidbody.position = position;
         }
 
+        private void StopSideways()
+        {
+            rigidbody.velocity = new Vector3(0, rigidbody.velocity.y, _movementData.ForwardSpeed);
+            rigidbody.angularVelocity = Vector3.zero;
+        }
+
         private void Stop()
         {
             rigidbody.velocity = Vector3.zero;
             rigidbody.angularVelocity = Vector3.zero;
+        }
+
+        public void OnReset()
+        {
+            Stop();
+            _isReadyToPlay = false;
+            _isReadyToMove = false;
         }
     }
 }

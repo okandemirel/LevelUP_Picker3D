@@ -7,6 +7,7 @@ TagManager:
   - Collectable
   - StageArea
   - MiniGameArea
+  - Ball
   layers:
   - Default
   - TransparentFX

@@ -32,6 +32,8 @@ namespace Managers
             UISignals.Instance.onUpdateStageData += OnUpdateStageData;
             UISignals.Instance.onSetLevelText += OnSetLevelText;
             CoreGameSignals.Instance.onPlay += OnPlay;
+            CoreGameSignals.Instance.onLevelFailed += OnLevelFailed;
+            CoreGameSignals.Instance.onLevelSuccessful += OnLevelSuccessful;
         }
 
         private void UnsubscribeEvents()
@@ -41,6 +43,8 @@ namespace Managers
             UISignals.Instance.onUpdateStageData -= OnUpdateStageData;
             UISignals.Instance.onSetLevelText -= OnSetLevelText;
             CoreGameSignals.Instance.onPlay -= OnPlay;
+            CoreGameSignals.Instance.onLevelFailed -= OnLevelFailed;
+            CoreGameSignals.Instance.onLevelSuccessful -= OnLevelSuccessful;
         }
 
         private void OnDisable()
@@ -75,9 +79,31 @@ namespace Managers
             UISignals.Instance.onClosePanel?.Invoke(UIPanels.StartPanel);
         }
 
+        private void OnLevelFailed()
+        {
+            UISignals.Instance.onClosePanel?.Invoke(UIPanels.LevelPanel);
+            UISignals.Instance.onOpenPanel?.Invoke(UIPanels.FailPanel);
+        }
+
+        private void OnLevelSuccessful()
+        {
+            UISignals.Instance.onClosePanel?.Invoke(UIPanels.LevelPanel);
+            UISignals.Instance.onOpenPanel?.Invoke(UIPanels.WinPanel);
+        }
+
         public void Play()
         {
             CoreGameSignals.Instance.onPlay?.Invoke();
+        }
+
+        public void NextLevel()
+        {
+            CoreGameSignals.Instance.onNextLevel?.Invoke();
+        }
+
+        public void RestartLevel()
+        {
+            CoreGameSignals.Instance.onRestartLevel?.Invoke();
         }
     }
 }

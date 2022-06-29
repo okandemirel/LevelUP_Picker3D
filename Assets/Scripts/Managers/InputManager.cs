@@ -55,12 +55,16 @@ namespace Managers
 
         private void SubscribeEvents()
         {
+            InputSignals.Instance.onEnableInput += OnEnableInput;
+            InputSignals.Instance.onDisableInput += OnDisableInput;
             CoreGameSignals.Instance.onPlay += OnPlay;
             CoreGameSignals.Instance.onReset += OnReset;
         }
 
         private void UnsubscribeEvents()
         {
+            InputSignals.Instance.onEnableInput -= OnEnableInput;
+            InputSignals.Instance.onDisableInput -= OnDisableInput;
             CoreGameSignals.Instance.onPlay -= OnPlay;
             CoreGameSignals.Instance.onReset -= OnReset;
         }
@@ -123,6 +127,16 @@ namespace Managers
                     }
                 }
             }
+        }
+
+        private void OnEnableInput()
+        {
+            isReadyForTouch = true;
+        }
+
+        private void OnDisableInput()
+        {
+            isReadyForTouch = false;
         }
 
         private void OnPlay()

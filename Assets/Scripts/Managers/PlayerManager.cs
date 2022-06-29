@@ -1,4 +1,3 @@
-using System;
 using Controllers;
 using Data.UnityObject;
 using Data.ValueObject;
@@ -42,7 +41,6 @@ namespace Managers
         private void SendPlayerDataToControllers()
         {
             movementController.SetMovementData(Data.MovementData);
-            //animationController.SetAnimationData();
             physicsController.SetPhysicsData();
             //poolForcer.SetForceData(Data.ForceData);
         }
@@ -57,15 +55,27 @@ namespace Managers
         private void SubscribeEvents()
         {
             InputSignals.Instance.onInputTaken += OnActivateMovement;
-            //InputSignals.Instance.onInputReleased += OnDeactiveMovement;
+            InputSignals.Instance.onInputReleased += OnDeactiveMovement;
             InputSignals.Instance.onInputDragged += OnGetInputValues;
+            CoreGameSignals.Instance.onPlay += OnPlay;
+            CoreGameSignals.Instance.onReset += OnReset;
+            CoreGameSignals.Instance.onLevelSuccessful += OnLevelSuccessful;
+            CoreGameSignals.Instance.onLevelFailed += OnLevelFailed;
+            CoreGameSignals.Instance.onStageAreaReached += OnStageAreaReached;
+            CoreGameSignals.Instance.onStageSuccessful += OnStageSuccessful;
         }
 
         private void UnsubscribeEvents()
         {
             InputSignals.Instance.onInputTaken -= OnActivateMovement;
-            //InputSignals.Instance.onInputReleased -= OnDeactiveMovement;
+            InputSignals.Instance.onInputReleased -= OnDeactiveMovement;
             InputSignals.Instance.onInputDragged -= OnGetInputValues;
+            CoreGameSignals.Instance.onPlay -= OnPlay;
+            CoreGameSignals.Instance.onReset -= OnReset;
+            CoreGameSignals.Instance.onLevelSuccessful -= OnLevelSuccessful;
+            CoreGameSignals.Instance.onLevelFailed -= OnLevelFailed;
+            CoreGameSignals.Instance.onStageAreaReached -= OnStageAreaReached;
+            CoreGameSignals.Instance.onStageSuccessful -= OnStageSuccessful;
         }
 
         private void OnDisable()
@@ -74,6 +84,8 @@ namespace Managers
         }
 
         #endregion
+
+        #region Movement Controller
 
         private void OnActivateMovement()
         {
@@ -88,6 +100,38 @@ namespace Managers
         private void OnGetInputValues(HorizontalInputParams inputParams)
         {
             movementController.UpdateInputValue(inputParams);
+        }
+
+        #endregion
+
+        private void OnPlay()
+        {
+            movementController.IsReadyToPlay(true);
+        }
+
+        private void OnLevelSuccessful()
+        {
+            movementController.IsReadyToPlay(false);
+        }
+
+        private void OnLevelFailed()
+        {
+            movementController.IsReadyToPlay(false);
+        }
+
+        private void OnStageSuccessful()
+        {
+            movementController.IsReadyToPlay(true);
+        }
+
+        private void OnStageAreaReached()
+        {
+            movementController.IsReadyToPlay(false);
+        }
+
+        private void OnReset()
+        {
+            movementController.OnReset();
         }
     }
 }

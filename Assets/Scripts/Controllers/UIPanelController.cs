@@ -11,7 +11,6 @@ namespace Controllers
 
         #region Serialized Variables
 
-        [SerializeField] private UIManager manager;
         [SerializeField] private List<GameObject> panels;
 
         #endregion
