@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Data.UnityObject;
 using Data.ValueObject;
@@ -49,7 +48,8 @@ namespace Controllers
         }
 
         private StageData GetPoolData() => Resources.Load<CD_Level>("Data/CD_Level")
-            .Levels[LevelManager.Instance.LevelID].StageList[stageID];
+            .Levels[LevelManager.Instance.LevelID % Resources.Load<CD_Level>("Data/CD_Level")
+                .Levels.Count].StageList[stageID];
 
         private void SetRequiredAmountToText()
         {

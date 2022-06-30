@@ -17,3 +17,7 @@ MonoBehaviour:
     - RequiredObjectCount: 10
     - RequiredObjectCount: 12
     - RequiredObjectCount: 14
+  - StageList:
+    - RequiredObjectCount: 10
+    - RequiredObjectCount: 12
+    - RequiredObjectCount: 14

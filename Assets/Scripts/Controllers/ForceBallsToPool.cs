@@ -82,8 +82,9 @@ namespace Controllers
                 if (ball.GetComponent<Rigidbody>() == null) continue;
                 Rigidbody rb;
                 rb = ball.GetComponent<Rigidbody>();
-                rb.AddForce(transform.forward * 2f, ForceMode.Impulse);
-                rb.AddForce(transform.up * 1.45f, ForceMode.Impulse);
+                // rb.AddForce(transform.forward * 2f, ForceMode.Impulse);
+                // rb.AddForce(transform.up * 1.45f, ForceMode.Impulse);
+                rb.AddForce(new Vector3(0, ForceData.ThrowForce.X, ForceData.ThrowForce.Y), ForceMode.Impulse);
             }
 
             ballColliderList.Clear();

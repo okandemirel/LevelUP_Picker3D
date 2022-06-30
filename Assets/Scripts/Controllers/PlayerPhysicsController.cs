@@ -26,12 +26,22 @@ namespace Controllers
             {
                 CoreGameSignals.Instance.onStageAreaReached?.Invoke();
                 InputSignals.Instance.onDisableInput?.Invoke();
-                DOVirtual.DelayedCall(5, other.transform.parent.GetComponent<PoolController>().ControlSuccessCondition);
+                DOVirtual.DelayedCall(3, other.transform.parent.GetComponent<PoolController>().ControlSuccessCondition);
             }
 
             if (other.CompareTag("MiniGameArea"))
             {
                 UISignals.Instance.onOpenPanel?.Invoke(UIPanels.MiniGamePanel);
+            }
+
+            if (other.CompareTag("WinZone"))
+            {
+                CoreGameSignals.Instance.onLevelSuccessful?.Invoke();
+            }
+
+            if (other.CompareTag("Booster"))
+            {
+                
             }
         }
 

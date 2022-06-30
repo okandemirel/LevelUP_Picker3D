@@ -1,6 +1,7 @@
 using System;
 using Cinemachine;
 using Signals;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Managers
@@ -15,6 +16,12 @@ namespace Managers
 
         #endregion
 
+        #region Private Variables
+
+        [ShowInInspector] private Vector3 _initialPosition;
+
+        #endregion
+
         #endregion
 
         #region Event Subscriptions
@@ -22,6 +29,7 @@ namespace Managers
         private void Awake()
         {
             virtualCamera = GetComponent<CinemachineVirtualCamera>();
+            GetInitialPosition();
         }
 
         private void OnEnable()
@@ -51,6 +59,16 @@ namespace Managers
         #endregion
 
 
+        private void GetInitialPosition()
+        {
+            _initialPosition = transform.localPosition;
+        }
+
+        private void OnMoveToInitialPosition()
+        {
+            transform.localPosition = _initialPosition;
+        }
+
         private void SetCameraTarget()
         {
             CoreGameSignals.Instance.onSetCameraTarget?.Invoke();
@@ -60,13 +78,14 @@ namespace Managers
         {
             var playerManager = FindObjectOfType<PlayerManager>().transform;
             virtualCamera.Follow = playerManager;
-            virtualCamera.LookAt = playerManager;
+            //virtualCamera.LookAt = playerManager;
         }
 
         private void OnReset()
         {
             virtualCamera.Follow = null;
             virtualCamera.LookAt = null;
+            OnMoveToInitialPosition();
         }
     }
 }

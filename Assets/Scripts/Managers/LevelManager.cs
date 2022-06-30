@@ -98,10 +98,6 @@ namespace Managers
             CoreGameSignals.Instance.onReset?.Invoke();
             CoreGameSignals.Instance.onSaveGameData?.Invoke(new SaveGameDataParams()
             {
-                Coin = null,
-                Haptic = null,
-                SFX = null,
-                VFX = null,
                 Level = _levelID
             });
             CoreGameSignals.Instance.onLevelInitialize?.Invoke();
@@ -113,10 +109,6 @@ namespace Managers
             CoreGameSignals.Instance.onReset?.Invoke();
             CoreGameSignals.Instance.onSaveGameData?.Invoke(new SaveGameDataParams()
             {
-                Coin = null,
-                Haptic = null,
-                SFX = null,
-                VFX = null,
                 Level = _levelID
             });
             CoreGameSignals.Instance.onLevelInitialize?.Invoke();

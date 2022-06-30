@@ -1,4 +1,5 @@
 using System;
+using System.Numerics;
 
 namespace Data.ValueObject
 {
@@ -20,6 +21,6 @@ namespace Data.ValueObject
     [Serializable]
     public class PlayerThrowForceData
     {
-        public float ThrowForce = 10;
+        public Vector2 ThrowForce = new Vector2(2, 2);
     }
 }
