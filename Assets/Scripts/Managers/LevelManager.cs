@@ -10,15 +10,13 @@ using UnityEngine;
 
 namespace Managers
 {
-    public class LevelManager : MonoSingleton<LevelManager>
+    public class LevelManager : MonoBehaviour
     {
         #region Self Variables
 
         #region Public Variables
 
         [Header("Data")] public LevelData Data;
-
-        [HideInInspector] public int LevelID => _levelID;
 
         #endregion
 
@@ -38,7 +36,7 @@ namespace Managers
 
         #endregion
 
-        protected override void Awake()
+        private void Awake()
         {
             _levelID = GetActiveLevel();
             Data = GetLevelData();
@@ -69,6 +67,7 @@ namespace Managers
             CoreGameSignals.Instance.onClearActiveLevel += OnClearActiveLevel;
             CoreGameSignals.Instance.onNextLevel += OnNextLevel;
             CoreGameSignals.Instance.onRestartLevel += OnRestartLevel;
+            CoreGameSignals.Instance.onGetLevelID += OnGetLevelID;
         }
 
         private void UnsubscribeEvents()
@@ -77,6 +76,7 @@ namespace Managers
             CoreGameSignals.Instance.onClearActiveLevel -= OnClearActiveLevel;
             CoreGameSignals.Instance.onNextLevel -= OnNextLevel;
             CoreGameSignals.Instance.onRestartLevel -= OnRestartLevel;
+            CoreGameSignals.Instance.onGetLevelID -= OnGetLevelID;
         }
 
         private void OnDisable()
@@ -113,6 +113,12 @@ namespace Managers
             });
             CoreGameSignals.Instance.onLevelInitialize?.Invoke();
         }
+
+        private int OnGetLevelID()
+        {
+            return _levelID;
+        }
+
 
         private void OnInitializeLevel()
         {

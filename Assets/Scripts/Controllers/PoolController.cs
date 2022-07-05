@@ -48,7 +48,7 @@ namespace Controllers
         }
 
         private StageData GetPoolData() => Resources.Load<CD_Level>("Data/CD_Level")
-            .Levels[LevelManager.Instance.LevelID % Resources.Load<CD_Level>("Data/CD_Level")
+            .Levels[CoreGameSignals.Instance.onGetLevelID() % Resources.Load<CD_Level>("Data/CD_Level")
                 .Levels.Count].StageList[stageID];
 
         private void SetRequiredAmountToText()

@@ -5,7 +5,7 @@ using Keys;
 using Signals;
 using UnityEngine;
 
-public class GameManager : MonoSingleton<GameManager>
+public class GameManager : MonoBehaviour
 {
     #region Self Variables
 
@@ -17,9 +17,8 @@ public class GameManager : MonoSingleton<GameManager>
 
     #endregion
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
         Application.targetFrameRate = 60;
     }
 
@@ -56,7 +55,6 @@ public class GameManager : MonoSingleton<GameManager>
     {
         if (saveDataParams.Level != null)
         {
-            Debug.LogWarning(saveDataParams.Level);
             ES3.Save("Level", saveDataParams.Level);
         }
 

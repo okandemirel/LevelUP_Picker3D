@@ -1,3 +1,4 @@
+using System;
 using Enums;
 using Extentions;
 using Keys;
@@ -21,5 +22,7 @@ namespace Signals
         public UnityAction onSetCameraTarget = delegate { };
         public UnityAction onStageAreaReached = delegate { };
         public UnityAction onStageSuccessful = delegate { };
+
+        public Func<int> onGetLevelID = delegate { return 0; };
     }
 }
